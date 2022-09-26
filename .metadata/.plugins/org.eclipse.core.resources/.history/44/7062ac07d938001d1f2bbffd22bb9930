@@ -1,0 +1,5 @@
+package com.example.customer.advice;
+
+public class ApplicationExceptionHandler {
+
+}

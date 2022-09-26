@@ -1,0 +1,71 @@
+package com.example.customer.service;
+
+import java.util.ArrayList;
+import java.util.List;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import com.example.customer.entity.Customer;
+import com.example.customer.exception.UserNotFoundException;
+import com.example.customer.repository.CustomerRepository;
+
+@Service
+public class CustomerService {
+
+	@Autowired
+	private CustomerRepository repo;
+
+	public Customer saveCustomer(Customer customer) {	
+			return repo.save(customer);
+	}
+
+	public List<Customer> getAllCustomer() {
+		return repo.findAll();
+	}
+
+	public Customer getCustomerById(int id) throws UserNotFoundException {
+		Customer customer = repo.findByCustomerId(id);
+		if (customer!=null) {
+			return customer;
+		}else {
+			throw new UserNotFoundException("customer not found with id "+ id);
+		}
+	}
+
+	public List<Customer> getCustomerByFirstName(String firstName) {
+		List<Customer> customers= repo.findByFirstName(firstName);
+		if (customers.size()!=0) {
+			return customers;
+		}else {
+			throw new UserNotFoundException("customer not found with firstName "+ firstName);
+		}
+	}
+
+	public String deleteCustomer(int id) {
+		Customer customer = getCustomerById(id);
+		if (customer!=null) {
+			repo.deleteById(id);
+			return "deleted customer with id " + id;
+		}
+		else {
+			throw new UserNotFoundException("customer not found with id "+ id);
+		}
+			
+		
+	}
+
+	public Customer updateCustomer(Customer customer) throws UserNotFoundException {
+		
+
+			Customer existingCustomer = getCustomerById(customer.getCustomerId());
+
+			existingCustomer.setFirstName(customer.getFirstName());
+			existingCustomer.setLastName(customer.getLastName());
+			existingCustomer.setAddress(customer.getAddress());
+			existingCustomer.setPhoneNumber(customer.getPhoneNumber());
+
+			return repo.save(existingCustomer);
+	
+
+	}
+
+}

@@ -1,0 +1,94 @@
+package com.example.customer.entity;
+
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.Table;
+import javax.persistence.UniqueConstraint;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Pattern;
+import javax.validation.constraints.Size;
+
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+
+@Entity
+@Table(name = "CUSTOMER_TABLE")
+@Data
+@AllArgsConstructor
+@NoArgsConstructor
+@Getter
+@Setter
+public class Customer {
+
+	@Id
+	@GeneratedValue
+	@Column(name = "CUSTOMER_ID")
+	private int customerId;
+
+	@Column(name = "FIRST_NAME",unique=true)
+	@NotNull(message = "first name should not be null")
+	private String firstName;
+
+	@Column(name = "LAST_NAME")
+	@NotNull(message = "last name should not be null")
+	private String lastName;
+
+	@Column(name = "PHONE_NUMBER")
+	@Pattern(regexp="(^$|[0-9]{10})",message="phone number should be ten digits")
+	@NotNull(message = "phoneNumber should not be null")
+	private String phoneNumber;
+
+	@Column(name = "ADDRESS")
+	private String address;
+
+	
+	  
+	  public Customer() { super(); }
+	  
+	  
+	  public Customer(int customerId, @NotNull(message = "first name should not be null") String firstName,
+			@NotNull(message = "last name should not be null") String lastName,
+			@Pattern(regexp = "^\\\\d{10}$", message = "phone number should be ten digits") @NotNull(message = "phoneNumber should not be null") String phoneNumber,
+			String address) {
+		super();
+		this.customerId = customerId;
+		this.firstName = firstName;
+		this.lastName = lastName;
+		this.phoneNumber = phoneNumber;
+		this.address = address;
+	}
+
+
+
+
+
+
+
+	public int getCustomerId() { return customerId; }
+	  
+	  public void setCustomerId(int customerId) { this.customerId = customerId; }
+	  
+	  public String getFirstName() { return firstName; }
+	  
+	  public void setFirstName(String firstName) { this.firstName = firstName; }
+	  
+	  public String getLastName() { return lastName; }
+	  
+	  public void setLastName(String lastName) { this.lastName = lastName; }
+	  
+	  public String getPhoneNumber() { return phoneNumber; }
+	  
+	  public void setPhoneNumber(String phoneNumber) { this.phoneNumber =
+	  phoneNumber; }
+	  
+	  public String getAddress() { return address; }
+	  
+	  public void setAddress(String address) { this.address = address; }
+	 
+
+}
