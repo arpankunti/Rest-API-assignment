@@ -23,7 +23,7 @@ public class Customer {
 	@Column(name = "CUSTOMER_ID")
 	private int customerId;
 
-	@Column(name = "FIRST_NAME")
+	@Column(name = "FIRST_NAME", unique = true)
 	@NotNull(message = "first name should not be null")
 	private String firstName;
 
